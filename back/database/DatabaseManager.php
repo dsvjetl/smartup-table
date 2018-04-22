@@ -33,7 +33,87 @@ class DatabaseManager extends Database
         }
     }
 
+    /**
+     * @param number $tableId
+     * @return boolean (0|1)
+     */
+    private function tableActive($tableId)
+    {
+        $result = $this->conn()->query("SELECT active FROM tables WHERE id = '$tableId' LIMIT 1");
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                return $row['active'];
+            }
+        } else {
+            $this->returnError('tableActive');
+        }
+    }
+
+
     //-insert into DB-//
+
+    /**
+     *
+     */
+    public function getAllTables()
+    {
+        $data = [];
+        $result = $this->conn()->query("SELECT * FROM tables");
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $item = [
+                    'id' => $row['id'],
+                    'active' => $row['active'],
+                    'token' => $row['token']
+                ];
+                $data[] = $item;
+            }
+            $this->response($data);
+        } else {
+            $this->returnError('getAllTables');
+        }
+    }
+
+    /**
+     * @param number $tableId
+     */
+    public function connectToTable($tableId)
+    {
+        $token = time() . rand();
+        if ($this->conn()->query("UPDATE tables SET active = TRUE, token = '$token' WHERE id = '$tableId'")) {
+            $this->response([
+                'desc' => 'table connected',
+                'status' => true,
+                'tableId' => $tableId
+            ]);
+        } else {
+            $this->returnError([
+                'desc' => 'table not connected',
+                'status' => false,
+                'tableId' => $tableId
+            ]);
+        }
+    }
+
+    /**
+     * @param number $tableId
+     */
+    public function disconnectTable($tableId)
+    {
+        if ($this->conn()->query("UPDATE tables SET active = FALSE, token = 0 WHERE id = '$tableId'")) {
+            $this->response([
+                'desc' => 'table disconnected',
+                'status' => true,
+                'tableId' => $tableId
+            ]);
+        } else {
+            $this->returnError([
+                'desc' => 'table not disconnected',
+                'status' => false,
+                'tableId' => $tableId
+            ]);
+        }
+    }
 
     /**
      * @param object $data
@@ -54,11 +134,16 @@ class DatabaseManager extends Database
      */
     public function makeOrder($data)
     {
-        if ($this->conn()->query("INSERT INTO orders (tableId) VALUES ('$data->tableId')")) {
-            $currentOrderId = $this->conn()->insert_id;
-            $this->orderProducts($data->orderedProducts, $currentOrderId);
+        $conn = $this->conn();
+        if ($this->tableActive($data->tableId)) {
+            if ($conn->query("INSERT INTO orders (tableId) VALUES ('$data->tableId')")) {
+                $currentOrderId = mysqli_insert_id($conn);
+                $this->orderProducts($data->orderedProducts, $currentOrderId);
+            } else {
+                $this->returnError('makeOrder');
+            }
         } else {
-            $this->returnError('makeOrder');
+            $this->returnError('table inactive');
         }
     }
 
@@ -70,20 +155,13 @@ class DatabaseManager extends Database
      */
     private function orderProducts($orderedProducts, $currentOrderId)
     {
-        $data = [];
-        foreach ($orderedProducts as $orderedProduct) {
-            $orderedProduct = (object)$orderedProduct;
-            $data[] = '(' . $currentOrderId . ', ' . $orderedProduct->productId . ', ' . $orderedProduct->productCount . ')';
+        foreach ($orderedProducts as $product) {
+            $objProduct = (object)$product;
+            $this->conn()->query("INSERT INTO order_products (orderId, productId, productCount) VALUES ('$currentOrderId', '$objProduct->productId', '$objProduct->productCount')");
         }
-        $data = implode(',', $data);
-
-        $this->response($data);
-
-        if ($this->conn()->query("INSERT INTO order_products (orderId, productId, productCount) VALUES '$data'")) {
-            $this->getOrders();
-        } else {
-            $this->returnError('orderProducts');
-        }
+        $this->response([
+            'ordered' => true
+        ]);
     }
 
 }
