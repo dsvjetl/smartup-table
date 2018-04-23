@@ -1,15 +1,22 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+    <div id="app">
+        <router-view/>
+    </div>
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+    import {GetPusher} from "./helpers/GetPusher";
+
+    export default {
+        name: 'App',
+
+        mounted() {
+            const pusher = new GetPusher(this.$store);
+            pusher.listenChannels('event');
+        }
+    }
 </script>
 
 <style lang="scss">
-  @import "./scss/style";
+    @import "./scss/style";
 </style>

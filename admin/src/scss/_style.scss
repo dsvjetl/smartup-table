@@ -1,5 +1,15 @@
 // variables
 @import "./variables/colors";
 
+// utilities
+@import "./utilities/headings";
+@import "./utilities/clear";
+
+// objects
+@import "./objects/layout";
+
 // plugins
 @import "./plugins/svg-icons";
+
+// base
+@import "./base/root-elements";
