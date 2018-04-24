@@ -5,6 +5,7 @@
 </template>
 
 <script>
+    // helpers
     import {GetPusher} from "./helpers/GetPusher";
 
     export default {
@@ -12,7 +13,8 @@
 
         mounted() {
             const pusher = new GetPusher(this.$store);
-            pusher.listenChannels('event');
+
+            this.$store.dispatch('tryTableConnection', Number(this.$route.query.t));
         }
     }
 </script>

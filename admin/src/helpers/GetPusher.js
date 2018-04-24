@@ -1,4 +1,3 @@
-import router from '@/router/index';
 import Pusher from 'pusher-js';
 
 let instance = null;
@@ -9,15 +8,11 @@ export class GetPusher {
         this._pusher = null;
 
         this.initPusher();
-        this.allowConnection();
+
         this.tryTableConnection();
     }
 
     //-getters-//
-
-    get tableId() {
-        return router.currentRoute.query.t;
-    }
 
     get store() {
         return this._store;
@@ -46,17 +41,10 @@ export class GetPusher {
         });
     }
 
-    allowConnection() {
-        const channel = this.pusher.subscribe(`t${this.tableId}`);
-        channel.bind('allowConnection', (data) => {
-            console.log(data);
-        });
-    }
-
     tryTableConnection() {
-        const channel = this.pusher.subscribe(`t${this.tableId}`);
+        const channel = this.pusher.subscribe('admin');
         channel.bind('tryTableConnection', (data) => {
-            console.log(data);
+            this.store.commit('setTryTableConnectionTables', data.tableId);
         });
     }
 }

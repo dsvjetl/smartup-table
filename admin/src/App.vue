@@ -9,11 +9,18 @@
     // components
     import AppHeader from '@/components/header/AppHeader';
 
+    // helpers
+    import {GetPusher} from "./helpers/GetPusher";
+
     export default {
         name: 'App',
 
         created() {
             this.$store.dispatch('getAllTables');
+        },
+
+        mounted() {
+            const pusher = new GetPusher(this.$store);
         },
 
         components: {

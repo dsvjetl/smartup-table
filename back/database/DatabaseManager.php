@@ -62,8 +62,8 @@ class DatabaseManager extends Database
         if ($result) {
             while ($row = $result->fetch_assoc()) {
                 $item = [
-                    'id' => $row['id'],
-                    'active' => $row['active'],
+                    'id' => (int)$row['id'],
+                    'active' => (int)$row['active'],
                     'token' => $row['token']
                 ];
                 $data[] = $item;

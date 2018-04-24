@@ -8,7 +8,7 @@
             <div
                     class="co-tables__table-item"
                     :class="[
-                        {'is-try-active': table.active === '1'}
+                        {'is-try-active': tryTableConnectionTables.includes(table.id)},
                     ]"
             >
                 <span class="co-tables__table-id">{{table.id}}</span>
@@ -26,6 +26,10 @@
         computed: {
             allTables() {
                 return this.$store.state.tables;
+            },
+
+            tryTableConnectionTables() {
+                return this.$store.state.tryTableConnectionTables;
             }
         }
     }

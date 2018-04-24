@@ -1,6 +1,6 @@
 <template>
     <div class="co-catch-table">
-        <h3>Odobravanje stola</h3>
+        <h3>Odobravanje stola {{tableId}}</h3>
     </div>
 </template>
 
@@ -15,7 +15,7 @@
         },
 
         mounted() {
-            this.$store.dispatch('connectToTable', this.tableId);
+            // this.$store.dispatch('connectToTable', Number(this.tableId));
         }
     }
 </script>

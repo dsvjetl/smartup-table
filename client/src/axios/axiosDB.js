@@ -6,6 +6,7 @@ export const axiosDB = axios.create({
 
 export const urls = {
     post: {
-        connectToTable: 'connectToTable.php'
+        connectToTable: 'connectToTable.php',
+        tryTableConnection: 'tryTableConnection.php'
     }
 };
