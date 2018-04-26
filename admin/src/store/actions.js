@@ -13,5 +13,21 @@ export const actions = {
                     reject();
                 });
         }));
+    },
+
+    connectToTable({commit}, tableId) {
+        return new Promise(((resolve, reject) => {
+            axiosDB.post(urls.post.connectToTable, {tableId})
+                .then(res => {
+                    console.log(res.data.data);
+                    if (!res.data.data.status) return;
+                    commit('setConnectecTables', tableId);
+                    resolve();
+                })
+                .catch(e => {
+                    console.error(e);
+                    reject();
+                });
+        }));
     }
 };

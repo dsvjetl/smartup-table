@@ -1,0 +1,6 @@
+{
+    "baseUrl": "http://localhost/smartup-table/back/requests/",
+    "urls": {
+        "get": "http://localhost/smartup-table/back/requests/getAllProducts.php"
+    }
+}

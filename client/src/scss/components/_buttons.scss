@@ -2,4 +2,17 @@
     border: none;
     padding: 10px 15px;
     background: inherit;
+
+    &--primary {
+        border: 1px solid transparent;
+        border-radius: 3px;
+        background-color: $blue-dark;
+        color: $white;
+
+        &:hover {
+            cursor: pointer;
+            border: 1px solid $blue-dark;
+            background-color: $blue-light;
+        }
+    }
 }

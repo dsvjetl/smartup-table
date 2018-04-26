@@ -2,7 +2,6 @@
 
 require '../database/DatabaseManager.php';
 require '../headers/Headers.php';
-require '../pusher/Pusher.php';
 
 $pusher = new Pusher();
 

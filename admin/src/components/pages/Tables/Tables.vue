@@ -9,10 +9,28 @@
                     class="co-tables__table-item"
                     :class="[
                         {'is-try-active': tryTableConnectionTables.includes(table.id)},
+                        {'is-connected': connectedTables.includes(table.id)},
+                        {'is-disabled': tryTableConnectionTables.includes(table.id) === false && connectedTables.includes(table.id) === false}
                     ]"
             >
                 <span class="co-tables__table-id">{{table.id}}</span>
                 <img class="co-tables__table-img" src="../../../assets/table.png">
+
+                <div
+                        class="co-tables__approve-connect"
+                        :class="[
+                            {'is-try-active': tryTableConnectionTables.includes(table.id)}
+                        ]"
+                >
+                    <button
+                            class="c-btn c-btn--primary co-tables__btn-connect"
+                            @click="approveTable(table.id)"
+                    >
+                        Connect
+                    </button>
+                    <button class="c-btn c-btn--primary co-tables__btn-disconnect">Disconnect</button>
+                    <div class="u-clear"></div>
+                </div>
             </div>
         </li>
         <div class="u-clear"></div>
@@ -30,7 +48,21 @@
 
             tryTableConnectionTables() {
                 return this.$store.state.tryTableConnectionTables;
+            },
+
+            connectedTables() {
+                return this.$store.state.connectedTables;
             }
+        },
+
+        methods: {
+            approveTable(tableId) {
+                this.$store.dispatch('connectToTable', tableId);
+            }
+        },
+
+        mounted() {
+            console.log(this.connectedTables.includes(1));
         }
     }
 </script>
@@ -44,23 +76,57 @@
             display: inline-block;
             padding: 5px 20px 13px;
             border-radius: 3px;
-            border: 2px solid $white;
+            border: 2px solid $gray-light;
             margin: 5px;
-            transition: transform .3s ease-in-out, background-color .3s ease-in-out;
+            transition: transform .3s ease-in-out,
+            border .1s ease-in-out;
 
             &.is-try-active {
                 background-color: red;
+            }
+
+            &.is-connected {
+                background-color: $blue-dark;
             }
 
             &.is-ordering {
                 background-color: green;
             }
 
+            &.is-disabled {
+                pointer-events: none;
+            }
+
             &:hover {
                 transform: scale(1.1);
                 cursor: pointer;
-                background-color: $gray-light;
+                border: 2px solid $blue-light;
+
+                .co-tables__approve-connect.is-try-active {
+                    visibility: visible; // hover
+                    opacity: 1; // hover
+                }
             }
+        }
+
+        &__approve-connect {
+            position: absolute;
+            padding: 5px;
+            bottom: -50px;
+            left: -40px;
+            width: 180px;
+            visibility: hidden; // hover
+            opacity: 0; // hover
+            transition: visibility .3s ease-in-out,
+            opacity .3s ease-in-out;
+        }
+
+        &__btn-connect {
+            float: left;
+        }
+
+        &__btn-disconnect {
+            float: right;
         }
 
         &__table-id {

@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__ . '/Database.php';
+require '../pusher/Pusher.php';
 
 class DatabaseManager extends Database
 {
@@ -81,11 +82,16 @@ class DatabaseManager extends Database
     {
         $token = time() . rand();
         if ($this->conn()->query("UPDATE tables SET active = TRUE, token = '$token' WHERE id = '$tableId'")) {
-            $this->response([
+            $response = [
                 'desc' => 'table connected',
                 'status' => true,
-                'tableId' => $tableId
-            ]);
+                'tableId' => $tableId,
+                'token' => $token
+            ];
+            $this->response($response);
+            $channel = 't' . $tableId;
+            $pusher = new Pusher();
+            $pusher->push($channel, 'connectToTable', $response);
         } else {
             $this->returnError([
                 'desc' => 'table not connected',

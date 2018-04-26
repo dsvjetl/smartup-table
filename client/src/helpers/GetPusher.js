@@ -2,15 +2,17 @@ import router from '@/router/index';
 import Pusher from 'pusher-js';
 
 let instance = null;
+
 export class GetPusher {
 
-    constructor(store) {
+    constructor(store, router) {
         this._store = store;
         this._pusher = null;
+        this._router = router;
 
         this.initPusher();
-        this.allowConnection();
         this.tryTableConnection();
+        this.connectToTable();
     }
 
     //-getters-//
@@ -25,6 +27,10 @@ export class GetPusher {
 
     get pusher() {
         return this._pusher;
+    }
+
+    get router() {
+        return this._router;
     }
 
 
@@ -46,16 +52,18 @@ export class GetPusher {
         });
     }
 
-    allowConnection() {
+    connectToTable() {
         const channel = this.pusher.subscribe(`t${this.tableId}`);
-        channel.bind('allowConnection', (data) => {
-            console.log(data);
+        channel.bind('connectToTable', data => {
+            if (!data.status) return;
+            this.store.commit('connectToTable', {status: data.status});
+            this.router.push({ name: 'OrderProducts', query: { t: this.tableId }});
         });
     }
 
     tryTableConnection() {
         const channel = this.pusher.subscribe(`t${this.tableId}`);
-        channel.bind('tryTableConnection', (data) => {
+        channel.bind('tryTableConnection', data => {
             console.log(data);
         });
     }

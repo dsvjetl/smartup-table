@@ -27,5 +27,19 @@ export const actions = {
                     reject();
                 });
         }));
+    },
+
+    getAllProducts({commit}) {
+        return new Promise(((resolve, reject) => {
+            axiosDB.get(urls.get.getAllProducts)
+                .then(res => {
+                    commit('setAllProducts', res.data.data);
+                    resolve();
+                })
+                .catch(e => {
+                    console.error(e);
+                    reject();
+                });
+        }));
     }
 };

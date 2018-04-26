@@ -12,9 +12,7 @@
         name: 'App',
 
         mounted() {
-            const pusher = new GetPusher(this.$store);
-
-            this.$store.dispatch('tryTableConnection', Number(this.$route.query.t));
+            const pusher = new GetPusher(this.$store, this.$router);
         }
     }
 </script>
