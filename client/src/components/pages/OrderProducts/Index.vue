@@ -40,7 +40,10 @@
                 class="co-order-products__order-wrapper"
                 v-if="cartUndelivered.length > 0"
         >
-            <button class="c-btn c-btn--primary">
+            <button
+                    class="c-btn c-btn--primary"
+                    @click="OrderChosenProducts"
+            >
                 <span>Order your products</span>
                 <font-awesome-icon :icon="icon.faShoppingCart"/>
             </button>
@@ -115,6 +118,10 @@
                     this.$store.state.cart.undelivered.filter(item => item.id === id)[0] :
                     false;
                 return product ? Number(product.productPrice).toFixed(2) : false;
+            },
+
+            OrderChosenProducts() {
+                this.$router.push({name: 'Cart', query: {t: this.$store.state.tableId}});
             }
         },
 

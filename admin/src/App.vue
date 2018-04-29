@@ -17,6 +17,7 @@
 
         created() {
             this.$store.dispatch('getAllTables');
+            this.$store.dispatch('getAllProducts');
         },
 
         mounted() {

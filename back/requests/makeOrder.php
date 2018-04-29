@@ -7,11 +7,15 @@ $db = new DatabaseManager();
 
 $tableId = $_POST['tableId'];
 $orderedProducts = $_POST['orderedProducts'];
+$token = $_POST['token'];
+$total = $_POST['total'];
 
-if (isset($tableId) && isset($orderedProducts)) {
+if (isset($tableId) && isset($orderedProducts) && isset($token)) {
     $data = (object)[
         'tableId' => $tableId,
-        'orderedProducts' => $orderedProducts
+        'orderedProducts' => $orderedProducts,
+        'token' => $token,
+        'total' => $total
     ];
     $db->makeOrder($data);
 }

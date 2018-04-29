@@ -158,9 +158,9 @@ class DatabaseManager extends Database
     {
         $conn = $this->conn();
         if ($this->tableActive($data->tableId)) {
-            if ($conn->query("INSERT INTO orders (tableId) VALUES ('$data->tableId')")) {
+            if ($conn->query("INSERT INTO orders (tableId, token, total) VALUES ('$data->tableId', '$data->token', '$data->total')")) {
                 $currentOrderId = mysqli_insert_id($conn);
-                $this->orderProducts($data->orderedProducts, $currentOrderId);
+                $this->orderProducts($data->orderedProducts, $currentOrderId, $data->tableId, $data->token);
             } else {
                 $this->returnError('makeOrder');
             }
@@ -175,15 +175,40 @@ class DatabaseManager extends Database
      * @param array $orderedProducts
      * @param number $currentOrderId
      */
-    private function orderProducts($orderedProducts, $currentOrderId)
+    private function orderProducts($orderedProducts, $currentOrderId, $tableId, $token)
     {
         foreach ($orderedProducts as $product) {
             $objProduct = (object)$product;
             $this->conn()->query("INSERT INTO order_products (orderId, productId, productCount) VALUES ('$currentOrderId', '$objProduct->productId', '$objProduct->productCount')");
         }
-        $this->response([
-            'ordered' => true
-        ]);
+
+        $response = [
+            'data' => $this->getOrdersByTokenAndId($tableId, $token)
+        ];
+
+        $channel = 'admin';
+        $pusher = new Pusher();
+        $pusher->push($channel, 'makeOrder', $response);
+
+        $this->response($response);
+    }
+
+    public function getOrdersByTokenAndId($tableId, $token, $mode = 'return')
+    {
+        $result = $this->conn()->query("SELECT o.*, op.id as order_productsId, op.productId, op.productCount FROM orders o
+          INNER JOIN order_products op ON o.id = op.orderId
+          WHERE o.tableId = '$tableId' AND o.token = '$token'");
+        if ($result->num_rows > 0) {
+            if ($mode === 'return') {
+                return $this->getRows($result);
+            }
+            else {
+                $this->response($this->getRows($result));
+            }
+        }
+        else {
+            $this->returnError('getOrdersByToken');
+        }
     }
 
 }

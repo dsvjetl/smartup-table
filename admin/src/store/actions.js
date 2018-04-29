@@ -21,7 +21,7 @@ export const actions = {
                 .then(res => {
                     console.log(res.data.data);
                     if (!res.data.data.status) return;
-                    commit('setConnectecTables', tableId);
+                    commit('setConnectedTables', tableId);
                     resolve();
                 })
                 .catch(e => {
@@ -29,5 +29,20 @@ export const actions = {
                     reject();
                 });
         }));
-    }
+    },
+
+    getAllProducts({commit}) {
+        return new Promise(((resolve, reject) => {
+            axiosDB.get(urls.get.getAllProducts)
+                .then(res => {
+                    console.log(res);
+                    commit('setAllProducts', res.data.data);
+                    resolve();
+                })
+                .catch(e => {
+                    console.error(e);
+                    reject();
+                });
+        }));
+    },
 };

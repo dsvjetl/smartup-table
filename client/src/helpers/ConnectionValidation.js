@@ -61,7 +61,8 @@ export class ConnectionValidation {
         })
             .then(data => {
                 if (data.status) {
-                    this.store.commit('connectToTable', {status: data.status});
+                    this.store.commit('connectToTable', {status: data.status, tableId: Number(this.tableId), token: data.token});
+                    LocalStorage.getInstance().saveItem({token: data.token});
                 }
                 else {
                     this.router.push({name: 'catchTable', query: {t: this.tableId}});

@@ -59,5 +59,47 @@ export const actions = {
                     reject(e);
                 });
         }));
+    },
+
+    makeOrder({commit, state}, total) {
+        const orderedProducts = [];
+        state.cart.undelivered.forEach(product => {
+            orderedProducts.push({
+                productId: product.id,
+                productCount: product.count
+            });
+        });
+        const req = {
+            tableId: state.tableId,
+            token: state.token,
+            orderedProducts,
+            total
+        };
+        return new Promise(((resolve, reject) => {
+            axiosDB.post(urls.post.makeOrder, req)
+                .then(res => {
+                    console.log(res);
+                    resolve();
+                })
+                .catch(e => {
+                    console.error(e);
+                    reject();
+                });
+        }));
+    },
+
+    getOrderedProducts({commit, state}) {
+        return new Promise((resolve, reject) => {
+            axiosDB.get(`${urls.get.getOrderedProducts}?tableId=${state.tableId}&token=${state.token}`)
+                .then(res => {
+                    console.log(res);
+                    commit('updateOrderedProducts', res.data.data);
+                    resolve();
+                })
+                .catch(e => {
+                    console.error(e);
+                    reject();
+                });
+        });
     }
 };

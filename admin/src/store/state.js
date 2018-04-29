@@ -1,5 +1,7 @@
 export const state = {
     tables: [],
     tryTableConnectionTables: [],
-    connectedTables: []
+    connectedTables: [],
+    orderedProducts: [],
+    allProducts: []
 };

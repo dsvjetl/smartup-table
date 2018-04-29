@@ -57,11 +57,9 @@ export class GetPusher {
         const channel = this.pusher.subscribe(`t${this.tableId}`);
         channel.bind('connectToTable', data => {
             if (!data.status) return;
-            console.log({
-                router: this.router
-            });
+            console.log(data);
             LocalStorage.getInstance().saveItem({token: data.token});
-            this.store.commit('connectToTable', {status: data.status});
+            this.store.commit('connectToTable', {status: data.status, tableId: Number(this.tableId), token: data.token});
             this.router.push({name: 'OrderProducts', query: {t: this.tableId}});
         });
     }

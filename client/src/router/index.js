@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import CatchTable from '@/components/pages/CatchTable/Index';
 import OrderProducts from '@/components/pages/OrderProducts/Index';
 import NoLsItem from '@/components/pages/NoLsItem/Index';
+import Cart from '@/components/pages/Cart/Index';
 
 Vue.use(Router);
 
@@ -22,6 +23,11 @@ export default new Router({
             path: '/no-ls-item',
             name: 'noLsItem',
             component: NoLsItem
+        },
+        {
+            path: '/cart',
+            name: 'Cart',
+            component: Cart
         }
     ]
 });

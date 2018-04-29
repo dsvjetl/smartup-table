@@ -1,6 +1,13 @@
 export const mutations = {
     updateAllTables(state, tables) {
-        state.tables = tables;
+        tables.forEach(table => {
+            if (table.active === 1) {
+                state.connectedTables.push(table.id);
+            }
+            else {
+                state.tables = tables;
+            }
+        });
     },
 
     setTryTableConnectionTables(state, tableId) {
@@ -11,11 +18,19 @@ export const mutations = {
         state.tryTableConnectionTables.push(tableId);
     },
 
-    setConnectecTables(state, tableId) {
+    setConnectedTables(state, tableId) {
         const indexOf = state.tryTableConnectionTables.indexOf(tableId);
         if (indexOf > -1) {
             state.tryTableConnectionTables.splice(indexOf, 1);
         }
         state.connectedTables.push(tableId);
+    },
+
+    setOrderedProducts(state, orderedProducts) {
+        state.orderedProducts = orderedProducts;
+    },
+
+    setAllProducts(state, allProducts) {
+        state.allProducts = allProducts;
     }
 };

@@ -10,6 +10,7 @@ export class GetPusher {
         this.initPusher();
 
         this.tryTableConnection();
+        this.makeOrder();
     }
 
     //-getters-//
@@ -45,6 +46,13 @@ export class GetPusher {
         const channel = this.pusher.subscribe('admin');
         channel.bind('tryTableConnection', (data) => {
             this.store.commit('setTryTableConnectionTables', data.tableId);
+        });
+    }
+
+    makeOrder() {
+        const channel = this.pusher.subscribe('admin');
+        channel.bind('makeOrder', (data) => {
+            this.store.commit('setOrderedProducts', data.data);
         });
     }
 }

@@ -10,8 +10,10 @@
                     :class="[
                         {'is-try-active': tryTableConnectionTables.includes(table.id)},
                         {'is-connected': connectedTables.includes(table.id)},
-                        {'is-disabled': tryTableConnectionTables.includes(table.id) === false && connectedTables.includes(table.id) === false}
+                        {'is-disabled': tryTableConnectionTables.includes(table.id) === false && connectedTables.includes(table.id) === false},
+                        {'is-ordering': isOrdering(table.id)}
                     ]"
+                    @click="goToTable(table.id)"
             >
                 <span class="co-tables__table-id">{{table.id}}</span>
                 <img class="co-tables__table-img" src="../../../assets/table.png">
@@ -58,6 +60,17 @@
         methods: {
             approveTable(tableId) {
                 this.$store.dispatch('connectToTable', tableId);
+            },
+
+            isOrdering(tableId) {
+                const orderingTableIds = this.$store.state.orderedProducts.map(product => Number(product.tableId));
+                return orderingTableIds.includes(tableId);
+            },
+
+            goToTable(tableId) {
+                if (this.isOrdering(tableId)) {
+                    this.$router.push({name: 'Table', query: {t: tableId}});
+                }
             }
         },
 
@@ -70,6 +83,15 @@
 <style lang="scss" scoped>
     .co-tables {
 
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
         &__table-item {
             position: relative;
             font-size: 16px;
@@ -78,7 +100,7 @@
             border-radius: 3px;
             border: 2px solid $gray-light;
             margin: 5px;
-            transition: transform .3s ease-in-out,
+            transition: transform .3s linear,
             border .1s ease-in-out;
 
             &.is-try-active {
@@ -91,6 +113,12 @@
 
             &.is-ordering {
                 background-color: green;
+                color: $white;
+                animation: pulse 1s infinite ease-in-out;
+
+                &:hover {
+                    animation: none;
+                }
             }
 
             &.is-disabled {
