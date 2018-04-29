@@ -11,6 +11,9 @@
     // plugins
     import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
+    // helpers
+    import {ConnectionValidation} from "../../../helpers/ConnectionValidation";
+
     export default {
         name: 'CatchTableIndex',
 

@@ -10,6 +10,7 @@ export const urls = {
     },
     post: {
         connectToTable: 'connectToTable.php',
-        tryTableConnection: 'tryTableConnection.php'
+        tryTableConnection: 'tryTableConnection.php',
+        connectWithToken: 'connectWithToken.php'
     }
 };

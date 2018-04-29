@@ -4,6 +4,10 @@ export const mutations = {
     },
 
     setTryTableConnectionTables(state, tableId) {
+        const indexOf = state.connectedTables.indexOf(tableId);
+        if (indexOf > -1) {
+            state.connectedTables.splice(indexOf, 1);
+        }
         state.tryTableConnectionTables.push(tableId);
     },
 

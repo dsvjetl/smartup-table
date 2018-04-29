@@ -53,6 +53,26 @@ class DatabaseManager extends Database
 
     //-insert into DB-//
 
+    public function connectWithToken($data)
+    {
+        $result = $this->conn()->query("SELECT * FROM tables WHERE id = '$data->tableId' AND token = '$data->token' LIMIT 1");
+        if ($result->num_rows > 0) {
+            $this->response([
+                'desc' => 'connected by token',
+                'tableId' => $data->tableId,
+                'token' => $data->token,
+                'status' => true
+            ]);
+        } else {
+            $this->response([
+                'desc' => 'connection by token refused',
+                'tableId' => $data->tableId,
+                'token' => $data->token,
+                'status' => false
+            ]);
+        }
+    }
+
     /**
      *
      */
@@ -113,11 +133,7 @@ class DatabaseManager extends Database
                 'tableId' => $tableId
             ]);
         } else {
-            $this->returnError([
-                'desc' => 'table not disconnected',
-                'status' => false,
-                'tableId' => $tableId
-            ]);
+            $this->returnError('table not disconnected');
         }
     }
 

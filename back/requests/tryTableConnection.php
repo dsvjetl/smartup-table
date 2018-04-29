@@ -10,9 +10,7 @@ $db = new DatabaseManager();
 $tableId = $_POST['tableId'];
 
 if (isset($tableId)) {
-    $db->response([
-        'status' => true
-    ]);
+    $db->disconnectTable($tableId);
     $data['tableId'] = (int)$tableId;
     $pusher->push('admin', 'tryTableConnection', $data);
 }

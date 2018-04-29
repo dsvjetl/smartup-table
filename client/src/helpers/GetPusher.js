@@ -1,5 +1,6 @@
 import router from '@/router/index';
 import Pusher from 'pusher-js';
+import {LocalStorage} from "./LocalStorage";
 
 let instance = null;
 
@@ -17,10 +18,6 @@ export class GetPusher {
 
     //-getters-//
 
-    get tableId() {
-        return router.currentRoute.query.t;
-    }
-
     get store() {
         return this._store;
     }
@@ -31,6 +28,10 @@ export class GetPusher {
 
     get router() {
         return this._router;
+    }
+
+    get tableId() {
+        return this.router.currentRoute.query.t;
     }
 
 
@@ -56,8 +57,12 @@ export class GetPusher {
         const channel = this.pusher.subscribe(`t${this.tableId}`);
         channel.bind('connectToTable', data => {
             if (!data.status) return;
+            console.log({
+                router: this.router
+            });
+            LocalStorage.getInstance().saveItem({token: data.token});
             this.store.commit('connectToTable', {status: data.status});
-            this.router.push({ name: 'OrderProducts', query: { t: this.tableId }});
+            this.router.push({name: 'OrderProducts', query: {t: this.tableId}});
         });
     }
 

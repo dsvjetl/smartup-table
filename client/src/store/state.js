@@ -1,4 +1,7 @@
 export const state = {
     connected: false,
-    allProducts: []
+    allProducts: [],
+    cart: {
+        undelivered: []
+    }
 };

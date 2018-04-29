@@ -16,6 +16,7 @@ export const actions = {
     },
 
     tryTableConnection({commit}, tableId) {
+        commit('connectToTable', {status: false});
         return new Promise(((resolve, reject) => {
             axiosDB.post(urls.post.tryTableConnection, {tableId})
                 .then(response => {
@@ -39,6 +40,23 @@ export const actions = {
                 .catch(e => {
                     console.error(e);
                     reject();
+                });
+        }));
+    },
+
+    connectWithToken({commit}, {token, tableId}) {
+        console.log(token, tableId);
+        return new Promise(((resolve, reject) => {
+            axiosDB.post(urls.post.connectWithToken, {
+                token,
+                tableId
+            })
+                .then(res => {
+                    resolve(res.data.data);
+                })
+                .catch(e => {
+                    console.error(e);
+                    reject(e);
                 });
         }));
     }
