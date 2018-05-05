@@ -13,7 +13,7 @@ export default new Router({
             component: Tables
         },
         {
-            path: '/table',
+            path: '/table/:t',
             name: 'Table',
             component: Table
         }

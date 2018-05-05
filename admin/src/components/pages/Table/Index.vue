@@ -36,7 +36,7 @@
 
         data() {
             return {
-                tableId: this.$router.currentRoute.query.t
+                tableId: this.$route.params.t
             }
         },
 

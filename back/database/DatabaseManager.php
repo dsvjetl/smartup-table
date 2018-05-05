@@ -211,4 +211,9 @@ class DatabaseManager extends Database
         }
     }
 
+    private function getOrderedUndeliveredProducts($tableId, $token)
+    {
+
+    }
+
 }

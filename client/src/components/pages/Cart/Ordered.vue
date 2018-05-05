@@ -2,6 +2,7 @@
     <div class="co-ordered">
         <ul
                 class="co-ordered__ul"
+                v-if="deliveredOrdersIds.length > 0"
                 v-for="orderId in deliveredOrdersIds"
         >
             <li
@@ -37,12 +38,9 @@
                 return this.$store.state.allProducts;
             },
 
-            allDeliveredOrders() {
-                return this.$store.state.cart.delivered;
-            },
-
             deliveredOrdersIds() {
-                const allIds = this.allDeliveredOrders.map(item => item.id);
+                if (!this.ordered) return [];
+                const allIds = this.ordered.map(item => item.id);
                 const uniqueIds = allIds.filter((value, index, self) => {
                     return self.indexOf(value) === index;
                 });
@@ -58,15 +56,15 @@
             },
 
             totalAmount(orderId) {
-                return this.allDeliveredOrders.filter(order => order.id === orderId)[0].total;
+                return this.ordered.filter(order => order.id === orderId)[0].total;
             },
 
             delivered(orderId) {
-                return Number(this.allDeliveredOrders.filter(order => order.id === orderId)[0].delivered);
+                return Number(this.ordered.filter(order => order.id === orderId)[0].delivered);
             }
         },
 
-        mounted() {
+        created() {
             this.$store.dispatch('getOrderedProducts');
         }
     }

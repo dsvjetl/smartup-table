@@ -69,7 +69,7 @@
 
             goToTable(tableId) {
                 if (this.isOrdering(tableId)) {
-                    this.$router.push({name: 'Table', query: {t: tableId}});
+                    this.$router.push({name: 'Table', params: {t: tableId}});
                 }
             }
         },
