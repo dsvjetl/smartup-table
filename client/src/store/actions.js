@@ -88,9 +88,9 @@ export const actions = {
         }));
     },
 
-    getOrderedProducts({commit, state}) {
+    getOrderedProducts({commit, state}, {tableId = null, token = null}) {
         return new Promise((resolve, reject) => {
-            axiosDB.get(`${urls.get.getOrderedProducts}?tableId=${state.tableId}&token=${state.token}`)
+            axiosDB.get(`${urls.get.getOrderedProducts}?tableId=${state.tableId ? state.tableId : tableId}&token=${state.token ? state.token : token}`)
                 .then(res => {
                     console.log(res);
                     commit('updateOrderedProducts', res.data.data);

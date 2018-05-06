@@ -195,25 +195,32 @@ class DatabaseManager extends Database
 
     public function getOrdersByTokenAndId($tableId, $token, $mode = 'return')
     {
-        $result = $this->conn()->query("SELECT o.*, op.id as order_productsId, op.productId, op.productCount FROM orders o
-          INNER JOIN order_products op ON o.id = op.orderId
-          WHERE o.tableId = '$tableId' AND o.token = '$token'");
+        $result = $this->conn()->query("SELECT
+  op.id           AS id,
+  op.productId    AS productId,
+  op.productCount AS productCount,
+  o.id            AS orderId,
+  p.name          AS productName,
+  p.price         AS productPrice,
+  p.amount        AS productAmount,
+  o.tableId       AS tableId,
+  o.delivered     AS delivered,
+  o.token         AS token,
+  o.total         AS total
+FROM order_products op
+  INNER JOIN orders o ON op.orderId = o.id
+  INNER JOIN products p ON op.productId = p.id
+WHERE o.token = '$token' AND o.tableId = '$tableId'");
+
         if ($result->num_rows > 0) {
             if ($mode === 'return') {
                 return $this->getRows($result);
-            }
-            else {
+            } else {
                 $this->response($this->getRows($result));
             }
-        }
-        else {
+        } else {
             $this->returnError('getOrdersByToken');
         }
-    }
-
-    private function getOrderedUndeliveredProducts($tableId, $token)
-    {
-
     }
 
 }

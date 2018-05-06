@@ -8,12 +8,12 @@
             <li
                     class="co-ordered__li"
                     v-for="product in ordered"
-                    :key="product.order_productsId"
-                    v-if="orderId === product.id"
+                    :key="product.orderProductsId"
+                    v-if="orderId === product.orderId"
             >
-                <span class="co-ordered__name">{{currentProduct(product.productId).name}}</span>
-                <span class="co-ordered__amount">{{currentProduct(product.productId).amount}}L</span>
-                <span>{{(Number(currentProduct(product.productId).price) * Number(product.productCount)).toFixed(2)}} kn</span>
+                <span class="co-ordered__name">{{product.productName}}</span>
+                <span class="co-ordered__amount">{{product.productAmount}}L</span>
+                <span>{{(Number(product.productPrice) * Number(product.productCount)).toFixed(2)}} kn</span>
                 <span class="co-ordered__count">(x {{product.productCount}})</span>
             </li>
             <li>
@@ -26,6 +26,9 @@
 </template>
 
 <script>
+    // helpers
+    import {LocalStorage} from "../../../helpers/LocalStorage";
+
     export default {
         name: 'Ordered',
 
@@ -34,13 +37,9 @@
                 return this.$store.state.cart.delivered;
             },
 
-            allProducts() {
-                return this.$store.state.allProducts;
-            },
-
             deliveredOrdersIds() {
                 if (!this.ordered) return [];
-                const allIds = this.ordered.map(item => item.id);
+                const allIds = this.ordered.map(item => item.orderId);
                 const uniqueIds = allIds.filter((value, index, self) => {
                     return self.indexOf(value) === index;
                 });
@@ -49,23 +48,24 @@
         },
 
         methods: {
-            currentProduct(productId) {
-                return this.allProducts.filter(product => (
-                    Number(product.id) === Number(productId)
-                ))[0];
-            },
-
             totalAmount(orderId) {
-                return this.ordered.filter(order => order.id === orderId)[0].total;
+                return this.ordered.filter(order => order.orderId === orderId)[0].total;
             },
 
             delivered(orderId) {
-                return Number(this.ordered.filter(order => order.id === orderId)[0].delivered);
+                return Number(this.ordered.filter(order => order.orderId === orderId)[0].delivered);
             }
         },
 
         created() {
-            this.$store.dispatch('getOrderedProducts');
+            console.log({
+                tableId: this.$store.state,
+                token: this.$store.state
+            });
+            this.$store.dispatch('getOrderedProducts', {
+                tableId: this.$route.query.t,
+                token: LocalStorage.getInstance().setItem().token
+            });
         }
     }
 </script>
