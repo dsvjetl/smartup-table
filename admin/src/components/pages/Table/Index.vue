@@ -6,23 +6,36 @@
                 <th>ID</th>
                 <th>Product</th>
                 <th>Amount</th>
+                <th>Product price</th>
+                <th>Total</th>
             </tr>
             </thead>
             <tbody>
             <tr
                     v-for="(product, index) in orderedProducts"
                     :key="index"
-                    v-if="orderId == product.id"
+                    v-if="orderId == product.orderId"
             >
                 <td>
                     {{product.id}}
                 </td>
                 <td>
-                    {{getCurrentProduct(product.productId).name}}
-                    {{getCurrentProduct(product.productId).amount}}L
+                    {{product.productName}}
+                    {{product.productAmount}}L
                 </td>
                 <td>
                     x {{product.productCount}}
+                </td>
+                <td>
+                    {{product.productPrice}} kn
+                </td>
+                <td>
+                    {{Number(product.productPrice * product.productCount).toFixed(2)}} kn
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Total: {{orderTotal(orderId)}} kn
                 </td>
             </tr>
             </tbody>
@@ -50,7 +63,7 @@
             },
 
             ordersIds() {
-                const ordersIds = this.orderedProducts.map(product => product.id);
+                const ordersIds = this.orderedProducts.map(product => product.orderId);
                 const uniqueIds = ordersIds.filter((value, index, self) => {
                     return self.indexOf(value) === index;
                 });
@@ -59,8 +72,8 @@
         },
 
         methods: {
-            getCurrentProduct(productId) {
-                return this.allProducts.filter(product => product.id === productId)[0];
+            orderTotal(orderId) {
+                return this.orderedProducts.filter(product => product.orderId === orderId)[0].total;
             }
         }
     }
