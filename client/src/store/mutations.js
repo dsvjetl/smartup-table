@@ -36,6 +36,7 @@ export const mutations = {
     },
 
     updateOrderedProducts(state, ordered) {
+        console.log(ordered);
         state.cart.delivered = ordered;
     }
 };

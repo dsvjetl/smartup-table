@@ -45,4 +45,38 @@ export const actions = {
                 });
         }));
     },
+
+    getOrderedProducts({commit}, {tableId, token}) {
+        return new Promise(((resolve, reject) => {
+            axiosDB.get(urls.get.getOrderedProducts + `?tableId=${tableId}&token=${token}`)
+                .then(res => {
+                    console.log(res);
+                    commit('setOrderedProducts', res.data.data);
+                    resolve();
+                })
+                .catch(e => {
+                    console.error(e);
+                    reject();
+                });
+        }));
+    },
+
+    makeDelivered({commit}, {tableId, token, orderId}) {
+        return new Promise(((resolve, reject) => {
+            axiosDB.post(urls.post.makeDelivered, {
+                tableId,
+                token,
+                orderId
+            })
+                .then(res => {
+                    console.log(res);
+                    commit('setOrderedProducts', res.data.data);
+                    resolve();
+                })
+                .catch(e => {
+                    console.error(e);
+                    reject();
+                });
+        }));
+    }
 };

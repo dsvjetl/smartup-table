@@ -4,6 +4,8 @@
                 class="co-ordered__ul"
                 v-if="deliveredOrdersIds.length > 0"
                 v-for="orderId in deliveredOrdersIds"
+                :key="orderId"
+                :class="{'is-ordered': delivered(orderId)}"
         >
             <li
                     class="co-ordered__li"
@@ -74,6 +76,10 @@
     .co-ordered {
         &__ul {
             padding-top: 15px;
+
+            &.is-ordered {
+                opacity: .5;
+            }
         }
 
         &__li {
@@ -93,6 +99,10 @@
 
         &__delivered {
             float: right;
+
+            .is-ordered & {
+                color: green;
+            }
         }
     }
 </style>

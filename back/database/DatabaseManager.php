@@ -53,6 +53,9 @@ class DatabaseManager extends Database
 
     //-insert into DB-//
 
+    /**
+     * @param object $data
+     */
     public function connectWithToken($data)
     {
         $result = $this->conn()->query("SELECT * FROM tables WHERE id = '$data->tableId' AND token = '$data->token' LIMIT 1");
@@ -109,8 +112,9 @@ class DatabaseManager extends Database
                 'token' => $token
             ];
             $this->response($response);
-            $channel = 't' . $tableId;
+
             $pusher = new Pusher();
+            $channel = 't' . $tableId;
             $pusher->push($channel, 'connectToTable', $response);
         } else {
             $this->returnError([
@@ -186,13 +190,19 @@ class DatabaseManager extends Database
             'data' => $this->getOrdersByTokenAndId($tableId, $token)
         ];
 
-        $channel = 'admin';
         $pusher = new Pusher();
+        $channel = 'admin';
         $pusher->push($channel, 'makeOrder', $response);
 
         $this->response($response);
     }
 
+    /**
+     * @param number $tableId
+     * @param string $token
+     * @param string $mode
+     * @return array
+     */
     public function getOrdersByTokenAndId($tableId, $token, $mode = 'return')
     {
         $result = $this->conn()->query("SELECT
@@ -206,20 +216,48 @@ class DatabaseManager extends Database
   o.tableId       AS tableId,
   o.delivered     AS delivered,
   o.token         AS token,
-  o.total         AS total
+  o.total         AS total,
+  (SELECT SUM(o.total) FROM orders o WHERE o.token = '$token') AS totalBill
 FROM order_products op
   INNER JOIN orders o ON op.orderId = o.id
   INNER JOIN products p ON op.productId = p.id
 WHERE o.token = '$token' AND o.tableId = '$tableId'");
 
+        $data = [];
         if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+
             if ($mode === 'return') {
-                return $this->getRows($result);
+                return $data;
+            } else if ($mode === 'pusher') {
+                $this->response($data);
+
+                $channel = 't' . $tableId;
+                $pusher = new Pusher();
+                $pusher->push($channel, 'makeDelivered', $data);
+
             } else {
-                $this->response($this->getRows($result));
+                $this->response($data);
             }
         } else {
             $this->returnError('getOrdersByToken');
+        }
+    }
+
+    /**
+     * @param number $tableId
+     * @param string $token
+     */
+    public function makeDelivered($tableId, $token, $orderId)
+    {
+        $result = $this->conn()->query("UPDATE orders SET delivered = TRUE WHERE tableId = '$tableId' AND token = '$token' AND id = '$orderId'");
+
+        if ($result) {
+            $this->getOrdersByTokenAndId($tableId, $token, 'pusher');
+        } else {
+            $this->returnError('makeDelivered');
         }
     }
 

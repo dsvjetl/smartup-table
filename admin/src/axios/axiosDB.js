@@ -7,9 +7,11 @@ export const axiosDB = axios.create({
 export const urls = {
     get: {
         allTables: 'getAllTables.php',
-        getAllProducts: 'getAllProducts.php'
+        getAllProducts: 'getAllProducts.php',
+        getOrderedProducts: 'getOrderedProducts.php'
     },
     post: {
-        connectToTable: 'connectToTable.php'
+        connectToTable: 'connectToTable.php',
+        makeDelivered: 'makeDelivered.php'
     }
 };

@@ -58,7 +58,7 @@ class Database
     }
 
     /**
-     * @param $data
+     * @param object $data
      * @param string $desc
      */
     public function response($data, $desc = 'SUCCESS')
