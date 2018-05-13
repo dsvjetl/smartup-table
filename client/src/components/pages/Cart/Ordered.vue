@@ -18,7 +18,7 @@
                 <span>{{(Number(product.productPrice) * Number(product.productCount)).toFixed(2)}} kn</span>
                 <span class="co-ordered__count">(x {{product.productCount}})</span>
             </li>
-            <li>
+            <li class="co-ordered__li-info">
                 Total: {{totalAmount(orderId)}} kn
                 <span class="co-ordered__delivered">{{delivered(orderId) ? 'Delivered' : 'Undelivered'}}</span>
                 <div class="u-clear"></div>
@@ -36,7 +36,7 @@
 
         computed: {
             ordered() {
-                return this.$store.state.cart.delivered;
+                return this.$store.state.cart.delivered.reverse();
             },
 
             deliveredOrdersIds() {
@@ -75,10 +75,13 @@
 <style lang="scss" scoped>
     .co-ordered {
         &__ul {
-            padding-top: 15px;
+            margin-top: 20px;
+            padding-left: 4px;
+            /*border-bottom: 2px solid $blue-dark;*/
+            border-left: 2px solid $blue-dark;
 
             &.is-ordered {
-                opacity: .5;
+                border-left: 2px solid green;
             }
         }
 
@@ -87,9 +90,12 @@
             padding: 5px 0 5px;
         }
 
+        &__li-info {
+            padding: 3px 0 5px;
+        }
+
         &__name {
             font-size: 20px;
-            text-decoration: underline;
         }
 
         &__amount, &__count {

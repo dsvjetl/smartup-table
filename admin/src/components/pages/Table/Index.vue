@@ -41,7 +41,7 @@
             <tr>
                 <td colspan="4">
                     <div class="co-table__order-info">
-                        <span>Table: {{getTableId(orderId)}}</span>
+                        <span class="co-table__table-id">Table: {{getTableId(orderId)}}</span> |
                         <span>Total: {{getOrderTotal(orderId)}} kn</span>
                     </div>
                     <div class="co-table__buttons">
@@ -151,12 +151,11 @@
         th {
             background-color: $blue-dark;
             color: $white;
-            text-transform: uppercase;
             font-weight: normal;
         }
 
         td, th {
-            padding: 5px;
+            padding: 5px 8px;
             text-align: center;
         }
 
@@ -164,15 +163,23 @@
             margin-top: 25px;
 
             &.is-delivered {
-                opacity: .5;
+                /*border: 1px solid green;*/
 
                 th {
-                    background-color: $blue-dark-dark;
+                    background-color: green;
+                }
+
+                td, th {
+                    /*border: 1px solid green;*/
                 }
             }
         }
 
         &__amount-unit {
+            color: $blue-dark;
+        }
+
+        &__table-id {
             color: $blue-dark;
         }
 
