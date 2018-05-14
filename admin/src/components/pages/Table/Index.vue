@@ -163,14 +163,8 @@
             margin-top: 25px;
 
             &.is-delivered {
-                /*border: 1px solid green;*/
-
                 th {
                     background-color: green;
-                }
-
-                td, th {
-                    /*border: 1px solid green;*/
                 }
             }
         }

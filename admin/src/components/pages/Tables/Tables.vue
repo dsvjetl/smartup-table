@@ -33,6 +33,18 @@
                     <button class="c-btn c-btn--primary co-tables__btn-disconnect">Disconnect</button>
                     <div class="u-clear"></div>
                 </div>
+
+                <div
+                    class="co-tables__disconnect"
+                    v-if="connectedTables.includes(table.id)"
+                >
+                    <button
+                        class="c-btn c-btn--primary"
+                        @click="disconnectTable(table.id)"
+                    >
+                        Disconnect
+                    </button>
+                </div>
             </div>
         </li>
         <div class="u-clear"></div>
@@ -71,11 +83,15 @@
                 if (this.isOrdering(tableId)) {
                     this.$router.push({name: 'Table', params: {t: tableId}});
                 }
+            },
+
+            disconnectTable(tableId) {
+                this.$store.dispatch('disconnectTable', tableId);
             }
         },
 
         mounted() {
-            console.log(this.connectedTables.includes(1));
+            console.log(this.allTables);
         }
     }
 </script>
@@ -134,6 +150,11 @@
                     visibility: visible; // hover
                     opacity: 1; // hover
                 }
+
+                .co-tables__disconnect {
+                    visibility: visible; // hover
+                    opacity: 1; // hover
+                }
             }
         }
 
@@ -157,8 +178,23 @@
             float: right;
         }
 
-        &__table-id {
+        &__disconnect {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            visibility: hidden; // hover
+            opacity: 0; // hover
+            transition: visibility .3s ease-in-out,
+            opacity .3s ease-in-out;
 
+            button {
+                position: absolute;
+                bottom: 0;
+                background-color: red;
+                color: $white;
+            }
         }
 
         &__table-img {

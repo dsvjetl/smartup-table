@@ -130,12 +130,19 @@ class DatabaseManager extends Database
      */
     public function disconnectTable($tableId)
     {
-        if ($this->conn()->query("UPDATE tables SET active = FALSE, token = 0 WHERE id = '$tableId'")) {
-            $this->response([
+        $result = $this->conn()->query("UPDATE tables SET active = FALSE, token = 0 WHERE id = '$tableId'");
+        if ($result) {
+            $response = [
                 'desc' => 'table disconnected',
                 'status' => true,
                 'tableId' => $tableId
-            ]);
+            ];
+
+            $this->response($response);
+
+            $pusher = new Pusher();
+            $channel = 't' . $tableId;
+            $pusher->push($channel, 'disconnectTable', $tableId);
         } else {
             $this->returnError('table not disconnected');
         }

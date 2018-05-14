@@ -78,5 +78,19 @@ export const actions = {
                     reject();
                 });
         }));
+    },
+
+    disconnectTable({commit}, tableId) {
+        return new Promise(((resolve, reject) => {
+            axiosDB.post(urls.post.disconnectTable, {tableId})
+                .then(res => {
+                    commit('disconnectTable', res.data.data.tableId);
+                    resolve();
+                })
+                .catch(e => {
+                    console.error(e);
+                    reject();
+                });
+        }));
     }
 };

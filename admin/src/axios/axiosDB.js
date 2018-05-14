@@ -12,6 +12,7 @@ export const urls = {
     },
     post: {
         connectToTable: 'connectToTable.php',
-        makeDelivered: 'makeDelivered.php'
+        makeDelivered: 'makeDelivered.php',
+        disconnectTable: 'disconnectTable.php'
     }
 };

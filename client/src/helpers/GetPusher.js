@@ -15,6 +15,7 @@ export class GetPusher {
         this.tryTableConnection();
         this.connectToTable();
         this.makeDelivered();
+        this.disconnectTable();
     }
 
     //-getters-//
@@ -76,6 +77,13 @@ export class GetPusher {
         const channel = this.pusher.subscribe(`t${this.tableId}`);
         channel.bind('makeDelivered', data => {
             this.store.commit('updateOrderedProducts', data);
+        });
+    }
+
+    disconnectTable() {
+        const channel = this.pusher.subscribe(`t${this.tableId}`);
+        channel.bind('disconnectTable', data => {
+            console.log(data);
         });
     }
 }

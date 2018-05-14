@@ -4,9 +4,7 @@ export const mutations = {
             if (table.active === 1) {
                 state.connectedTables.push(table.id);
             }
-            else {
-                state.tables = tables;
-            }
+            state.tables = tables;
         });
     },
 
@@ -32,5 +30,11 @@ export const mutations = {
 
     setAllProducts(state, allProducts) {
         state.allProducts = allProducts;
+    },
+
+    disconnectTable(state, tableId) {
+        const connectedTables = state.connectedTables;
+        const index = connectedTables.indexOf(tableId);
+        connectedTables.splice(index, 1);
     }
 };
