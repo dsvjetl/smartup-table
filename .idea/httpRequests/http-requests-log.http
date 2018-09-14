@@ -1,0 +1,273 @@
+POST http://localhost:3000/tables/disconnect?tableId=1
+
+<> 2018-09-14T011451.201.json
+
+###
+
+POST http://localhost:3000/tables/dissconnect?tableId=1
+
+<> 2018-09-14T011413.404.json
+
+###
+
+POST http://localhost:3000/tables/connect?tableId=1
+
+<> 2018-09-14T010413.201.json
+
+###
+
+GET http://localhost:3000/tables
+
+<> 2018-09-14T125926.200.json
+
+###
+
+GET http://localhost:3000/tables
+
+###
+
+GET http://localhost:3000/tables
+
+###
+
+GET http://localhost:3000/tables
+
+###
+
+GET http://localhost:3000/tables
+
+<> 2018-09-14T125447.200.json
+
+###
+
+POST http://localhost/smartup-table/back/requests/disconnectTable.php?tableId=1
+
+###
+
+GET http://localhost/smartup-table/back/requests/disconnectTable.php
+
+###
+
+GET http://localhost/smartup-table/back/requests/getAllTables.php
+
+<> 2018-09-14T125304.200.html
+
+###
+
+POST http://localhost/smartup-table/back/requests/disconnectTable.php?tableId=1
+
+###
+
+GET http://localhost:3000/tables/connect/1
+
+###
+
+GET http://localhost:3000/tables/connect/1
+
+<> 2018-09-14T124814.200.html
+
+###
+
+GET http://localhost:3000/connect/1
+
+<> 2018-09-14T124802.404.json
+
+###
+
+GET http://localhost:3000/connect/1
+
+<> 2018-09-14T124801.404.json
+
+###
+
+GET http://localhost:3000/connect/1
+
+###
+
+GET http://localhost:3000/connect/1
+
+###
+
+GET http://localhost:3000/connect/1
+
+<> 2018-09-14T124809.404.json
+
+###
+
+GET http://localhost:3000/connect/1
+
+<> 2018-09-14T124807.404.json
+
+###
+
+GET http://localhost:3000/connect/1
+
+<> 2018-09-14T124806.404.json
+
+###
+
+GET http://localhost:3000/connect/1
+
+<> 2018-09-14T124803.404.json
+
+###
+
+GET http://localhost:3000/tables
+
+<> 2018-09-14T124756.200.json
+
+###
+
+GET http://localhost:3000/tables
+
+###
+
+GET http://localhost:3000/connect/1
+
+<> 2018-09-14T124706.404.json
+
+###
+
+GET http://localhost:3000/tables
+
+<> 2018-09-14T124005.200.json
+
+###
+
+GET http://localhost:3000/tables
+
+<> 2018-09-14T124004.200.json
+
+###
+
+GET http://localhost:3000/tables
+
+###
+
+GET http://localhost:3000/tables
+
+<> 2018-09-14T123442.200.json
+
+###
+
+GET http://localhost:3000/tables
+
+<> 2018-09-14T123441.200.json
+
+###
+
+GET http://localhost:3000/tables
+
+<> 2018-09-14T123439.200.json
+
+###
+
+GET http://localhost:3000/tables
+
+<> 2018-09-13T065754.200.json
+
+###
+
+GET http://localhost:3000/tables
+
+###
+
+GET http://localhost:3000/tables
+
+###
+
+GET http://localhost:3000/tables
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255406981706164354
+
+<> 2018-05-05T072752.200.html
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255406981706164354
+
+<> 2018-05-05T072431.200.html
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255383372055684779
+
+<> 2018-05-05T071152.200.html
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255383372055684779
+
+<> 2018-05-05T070426.200.html
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255383372055684779
+
+<> 2018-05-05T070401.200.html
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255383372055684779
+
+<> 2018-05-05T065735.200.html
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255383372055684779
+
+<> 2018-05-05T065635.200.html
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255383372055684779
+
+<> 2018-05-05T065042.200.html
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255383372055684779
+
+<> 2018-05-05T065000.200.html
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255383372055684779
+
+<> 2018-05-05T064950.200.html
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255383372055684779
+
+<> 2018-05-05T064844.200.html
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255383372055684779
+
+<> 2018-05-05T064830.200.html
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255383372055684779
+
+<> 2018-05-05T064828.200.html
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255383372055684779
+
+<> 2018-05-05T064337.200.html
+
+###
+
+GET http://localhost/smartup-table/back/requests/getOrderedProducts.php?orderedProducts=[{productId: 10, productCount: 3}]&tableId=1&token=15255383372055684779
+
+<> 2018-05-05T064234.200.html
+
+###
+
+
