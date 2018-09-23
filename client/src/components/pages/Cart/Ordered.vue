@@ -60,12 +60,8 @@
         },
 
         created() {
-            console.log({
-                tableId: this.$store.state,
-                token: this.$store.state
-            });
             this.$store.dispatch('getOrderedProducts', {
-                tableId: this.$route.query.t,
+                tableId: this.$store.state.tableId,
                 token: LocalStorage.getInstance().setItem().token
             });
         }

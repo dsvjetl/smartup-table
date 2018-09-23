@@ -4,6 +4,7 @@ import CatchTable from '@/components/pages/CatchTable/Index';
 import OrderProducts from '@/components/pages/OrderProducts/Index';
 import NoLsItem from '@/components/pages/NoLsItem/Index';
 import Cart from '@/components/pages/Cart/Index';
+import Disconnected from '@/components/pages/Disconnected/Index';
 
 Vue.use(Router);
 
@@ -28,6 +29,11 @@ export default new Router({
             path: '/cart',
             name: 'Cart',
             component: Cart
+        },
+        {
+            path: '/disconnected',
+            name: 'Disconnected',
+            component: Disconnected
         }
     ]
 });

@@ -38,5 +38,11 @@ export const mutations = {
     updateOrderedProducts(state, ordered) {
         console.log(ordered);
         state.cart.delivered = ordered;
+    },
+
+    disconnectTable(state) {
+        state.connected = false;
+        state.tableId = null;
+        state.token = null;
     }
 };

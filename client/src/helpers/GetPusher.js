@@ -83,7 +83,9 @@ export class GetPusher {
     disconnectTable() {
         const channel = this.pusher.subscribe(`t${this.tableId}`);
         channel.bind('disconnectTable', data => {
-            console.log(data);
+            this.router.push({name: 'Disconnected'});
+            LocalStorage.getInstance().removeItem();
+            this.store.commit('disconnectTable');
         });
     }
 }
