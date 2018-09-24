@@ -1,6 +1,6 @@
 import {Body, Controller, Get, Post} from '@nestjs/common';
 import {TablesService} from './tables.service';
-import {ConnDiscTable_dto, TokenConnectTable_dto} from './tables.dto';
+import {ConnDiscTable_req_dto, TokenConnectTable_res_dto} from './tables.dto';
 
 @Controller('tables')
 export class TablesController {
@@ -10,17 +10,17 @@ export class TablesController {
     }
 
     @Post('/connect')
-    connectTable(@Body() body: ConnDiscTable_dto) {
+    connectTable(@Body() body: ConnDiscTable_req_dto) {
         return TablesService.connectTable(body.tableId);
     }
 
     @Post('/disconnect')
-    disconnectTable(@Body() body: ConnDiscTable_dto) {
+    disconnectTable(@Body() body: ConnDiscTable_req_dto) {
         return TablesService.disconnectTable(body.tableId);
     }
 
     @Post('/token-connect')
-    tokenConnectTable(@Body() body: TokenConnectTable_dto) {
+    tokenConnectTable(@Body() body: TokenConnectTable_res_dto) {
         return TablesService.tokenConnectTable(body);
     }
 }

@@ -4,11 +4,11 @@ export interface GetTables_dto {
     token: string
 }
 
-export interface ConnDiscTable_dto {
+export interface ConnDiscTable_req_dto {
     tableId: number
 }
 
-export interface TokenConnectTable_dto {
+export interface TokenConnectTable_res_dto {
     tableId: number,
     token: string
 }
